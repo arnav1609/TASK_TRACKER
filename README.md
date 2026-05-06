@@ -177,7 +177,7 @@ Auth state (user, token) is managed by Zustand with AsyncStorage persistence, wh
 
 ## Demo Video
 
-[Link to demo video]
+https://drive.google.com/file/d/1Kgt-exKAVj1Q0KgBk4kxfw3WnoTr5dnz/view?usp=sharing
 
 ---
 
