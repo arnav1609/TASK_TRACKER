@@ -18,19 +18,24 @@ export function TaskCard({ task }: TaskCardProps) {
   const deleteMutation = useDeleteTask();
   const router = useRouter();
 
-  const handleToggle = () => toggleMutation.mutate({ id: task.id, completed: !task.completed });
+  const swipeableRef = React.useRef<Swipeable>(null);
+
+  const handleToggle = () => {
+    swipeableRef.current?.close();
+    toggleMutation.mutate({ id: task.id, completed: !task.completed });
+  };
   const handleDelete = () => deleteMutation.mutate(task.id);
 
   const renderRightActions = () => (
-    <View style={styles.deleteAction}>
+    <Pressable style={styles.deleteAction} onPress={handleDelete}>
       <Trash2 color={Theme.colors.text} size={24} />
-    </View>
+    </Pressable>
   );
 
   const renderLeftActions = () => (
-    <View style={styles.completeAction}>
+    <Pressable style={styles.completeAction} onPress={handleToggle}>
       <Check color={Theme.colors.background} size={32} />
-    </View>
+    </Pressable>
   );
 
   const checkboxStyle = useAnimatedStyle(() => ({
@@ -40,6 +45,7 @@ export function TaskCard({ task }: TaskCardProps) {
 
   return (
     <Swipeable
+      ref={swipeableRef}
       renderRightActions={renderRightActions}
       renderLeftActions={renderLeftActions}
       onSwipeableRightOpen={handleDelete}
